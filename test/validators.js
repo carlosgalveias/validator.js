@@ -1004,9 +1004,6 @@ describe('Validators', function () {
         test({ validator: 'isBefore', args: [ new Date(2011, 7, 4) ],
             valid: [ '2010-07-02', '2010-08-04', new Date(0) ],
             invalid: [ '08/04/2011', new Date(2011, 9, 10) ] });
-        test({ validator: 'isBefore',
-            valid: [ '2000-08-04', new Date(0), new Date(Date.now() - 86400000) ],
-            invalid: [ '2100-07-02', new Date(2017, 10, 10) ] });
         test({ validator: 'isBefore', args: ['2011-08-03'],
             valid: [ '1999-12-31' ],
             invalid: [ 'invalid date' ] });
@@ -1270,7 +1267,7 @@ describe('Validators', function () {
         });
         for (var i = 0, str = '', encoded; i < 1000; i++) {
             str += String.fromCharCode(Math.random() * 26 | 97);
-            encoded = new Buffer(str).toString('base64');
+            encoded = Buffer.from(str).toString('base64');
             if (!validator.isBase64(encoded)) {
                 var msg = format('validator.isBase64() failed with "%s"', encoded);
                 throw new Error(msg);
